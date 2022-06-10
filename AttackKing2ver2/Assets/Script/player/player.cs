@@ -94,10 +94,10 @@ public class player : base_player
             clickedGameObject = null;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit2d = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
-            Debug.Log("aaa");
+            
             if (hit2d)
             {
-                Debug.Log("bbb");
+                
                 //そのオブジェクトを格納
                 clickedGameObject = hit2d.transform.gameObject;
 
