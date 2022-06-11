@@ -12,10 +12,12 @@ public class skill_srash : MonoBehaviour
     public float slow_power;
 
     Vector3 shotForward;
+    private now_player_damage PlayerAllStatu;   //主人公の合計ステータス取得用
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayerAllStatu = GameObject.Find("now_player_damage").GetComponent<now_player_damage>();
 
         // クリックした座標の取得（スクリーン座標からワールド座標に変換）
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -49,7 +51,7 @@ public class skill_srash : MonoBehaviour
 
         if (delete_time == 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -62,5 +64,20 @@ public class skill_srash : MonoBehaviour
         float dy = p2.y - p1.y;
         float rad = Mathf.Atan2(dy, dx);
         return rad * Mathf.Rad2Deg;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "enemy")
+        {
+            
+            if (other.GetComponent<enemy_mouse>().defense >= PlayerAllStatu.AllStrength())
+                other.GetComponent<enemy_mouse>().hp -= 1;
+            else
+                other.GetComponent<enemy_mouse>().hp -= PlayerAllStatu.AllStrength() - other.GetComponent<enemy_mouse>().defense;
+
+            Destroy(gameObject);
+        }
     }
 }

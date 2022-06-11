@@ -13,6 +13,7 @@ public class drop_weapon : base_weapon
 
     public AddStatus As = new AddStatus()                 //ドロップ時の追加ステータス格納用
     {
+        statunumber = new int[5],
         addname = new string[5],
         addvalue = new float[5]
     };
@@ -75,15 +76,16 @@ public class drop_weapon : base_weapon
             {
                 int ast_num = Random.Range(0, add_status_type.Length);
 
+                As.statunumber[i] = ast_num;
                 As.addname[i] = add_status_type[ast_num];
-                As.addvalue[i] = Mathf.Floor(CheckStatus(ast_num));
+                As.addvalue[i] = CheckStatus(ast_num);
             }
             else
             {
                 As.addname[i] = "---";
                 As.addvalue[i] = 0;
             }
-            //Debug.Log(As.addname[i] + " : " + As.addvalue[i]);
+            Debug.Log(As.addname[i] + " : " + As.addvalue[i]);
         }
     }
 
@@ -112,7 +114,7 @@ public class drop_weapon : base_weapon
             case (int)ADD_STATUS_TYPE.SPEED:
                 return Random.Range(1, 5);
             case (int)ADD_STATUS_TYPE.MOVE:
-                return Random.Range(0.5f, 1.0f);
+                return Random.Range(1, 1);
             case (int)ADD_STATUS_TYPE.LUC:
                 return Random.Range(5, 10);
             case (int)ADD_STATUS_TYPE.HP_REGENE:

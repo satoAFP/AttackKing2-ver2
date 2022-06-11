@@ -25,6 +25,7 @@ public class base_weapon : MonoBehaviour
     /// </summary>
     public struct AddStatus
     {
+        public int[] statunumber;       //追加ステータスの番号
         public string[] addname;        //追加ステータスの名前
         public float[] addvalue;        //追加ステータスの数値
     }

@@ -12,12 +12,13 @@ public class enemy_mouse : base_enemy
     private Vector2 RayRotato;                  //レイの回転位置決定変数
     private float rotato = 0;                   //回転量
     private GameObject SearchGameObject;        //レイに触れたオブジェクト
+    private now_player_damage PlayerAllStatu;   //主人公の合計ステータス取得用
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-
+        PlayerAllStatu = GameObject.Find("now_player_damage").GetComponent<now_player_damage>();
     }
 
     // Update is called once per frame
@@ -30,8 +31,6 @@ public class enemy_mouse : base_enemy
         //死亡処理
         if (hp <= 0)
             Destroy(gameObject);
-
-
     }
 
 
@@ -67,6 +66,11 @@ public class enemy_mouse : base_enemy
                 // 弾に速度を与える
                 rb.velocity = shotForward * move_speed;
 
+                if (RayRotato.x >= 0)
+                    transform.localScale = new Vector3(-3, 3, 1);
+                else
+                    transform.localScale = new Vector3(3, 3, 1);
+
                 // transformを取得
                 //Transform cloneTransform = this.gameObject.transform;
 
@@ -76,6 +80,29 @@ public class enemy_mouse : base_enemy
                 //cloneTransform.eulerAngles = worldAngle; // 回転角度を設定
 
             }
+        }
+    }
+
+
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "player_skill")
+        {
+            if (defense >= PlayerAllStatu.AllStrength())
+                hp -= 1;
+            else
+                hp -= PlayerAllStatu.AllStrength() - defense;
+
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "player_weapon")
+        {
+            if (defense >= PlayerAllStatu.AllStrength())
+                hp -= 1;
+            else
+                hp -= PlayerAllStatu.AllStrength() - defense;
         }
     }
 }

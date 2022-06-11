@@ -7,13 +7,20 @@ public class now_weapon : base_weapon
     public WeaponData wd = new WeaponData()             //武器データ作成
     {
         name = "", image = null, skill = null,
-        strength = 0, magic = 0, weight = 0, mp_cost = 0
+        strength = 0, magic = 0, weight = 50, mp_cost = 0
     };
 
+    public AddStatus As = new AddStatus()                 //ドロップ時の追加ステータス格納用
+    {
+        statunumber = new int[5],
+        addname = new string[5],
+        addvalue = new float[5]
+    };
+
+    [System.NonSerialized] public bool atack_flag = true;         //これが真のとき攻撃できる
+    [System.NonSerialized] public int time = 0;                   //折り返しまでの時間
 
     private GameObject clone;               //クローンするオブジェクト
-    private int time = 0;                   //折り返しまでの時間
-    private bool atack_flag = true;         //これが真のとき攻撃できる
     private Vector3 mem_shotForward;        //攻撃する方向ベクトル
     private float sord_speed = 0;           //攻撃速度
     private Rigidbody2D rb;                 //リジットボディ取得用
@@ -23,9 +30,6 @@ public class now_weapon : base_weapon
     // Start is called before the first frame update
     void Start()
     {
-        wd.weight = 50;
-        Debug.Log(System.Enum.GetValues(typeof(ADD_STATUS_TYPE)).Length);
-
         //初期化
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         player = transform.parent.gameObject.GetComponent<player>();
@@ -35,12 +39,6 @@ public class now_weapon : base_weapon
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(wd.name);
-        Debug.Log(wd.image);
-        Debug.Log(wd.skill);
-        Debug.Log(wd.strength);
-        Debug.Log(wd.magic);
-        Debug.Log(wd.weight);
         //攻撃処理
         if (atack_flag == true)
         {

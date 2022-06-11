@@ -6,6 +6,10 @@ TagManager:
   tags:
   - drop
   - enemy
+  - player_skill
+  - player_weapon
+  - enemy_skill
+  - enemy_weapon
   layers:
   - Default
   - TransparentFX

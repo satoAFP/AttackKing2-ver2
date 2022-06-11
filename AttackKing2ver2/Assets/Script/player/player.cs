@@ -103,7 +103,15 @@ public class player : base_player
 
                 if (clickedGameObject.tag == "drop")
                 {
+                    //ステータス格納
                     ChildObj.wd = clickedGameObject.GetComponent<drop_weapon>().Wd;
+                    ChildObj.As = clickedGameObject.GetComponent<drop_weapon>().As;
+
+                    //持っている武器の初期化
+                    ChildObj.atack_flag = true;
+                    ChildObj.time = 0;
+                    ChildObj.gameObject.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                    ChildObj.gameObject.SetActive(false);
 
                     //右クリックしたアイテムを削除
                     Destroy(clickedGameObject);
@@ -114,9 +122,5 @@ public class player : base_player
 
     
 
-    public int AllStrength()
-    {
-        int a = 0;
-        return a;
-    }
+    
 }
