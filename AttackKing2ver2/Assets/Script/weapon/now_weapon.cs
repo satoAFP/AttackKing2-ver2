@@ -26,6 +26,7 @@ public class now_weapon : base_weapon
     private Rigidbody2D rb;                 //リジットボディ取得用
     private player player;                  //プレイヤー取得用
     private skill_pos sp;                   //スキルポスの取得用
+    private player_all_statu PlayerAllStatu;//主人公の合計ステータス取得用
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class now_weapon : base_weapon
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         player = transform.parent.gameObject.GetComponent<player>();
         sp = transform.parent.gameObject.GetComponent<skill_pos>();
+        PlayerAllStatu = GameObject.Find("player_all_statu").GetComponent<player_all_statu>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class now_weapon : base_weapon
         if (atack_flag == true)
         {
             //武器の速度調整
-            sord_speed = 100 / (wd.weight * 2);
+            sord_speed = 100 / ((wd.weight / PlayerAllStatu.AllSpeed()) * 2);
 
             // クリックした座標の取得（スクリーン座標からワールド座標に変換）
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -74,14 +76,14 @@ public class now_weapon : base_weapon
         }
 
         //出現時間の折り返しまでくると戻ってくる
-        if (time == (wd.weight))
+        if (time == (wd.weight / PlayerAllStatu.AllSpeed()))
         {
             rb.velocity = -mem_shotForward * sord_speed;
         }
         
         //消去
         time++;
-        if (time == wd.weight * 2) 
+        if (time == wd.weight / PlayerAllStatu.AllSpeed() * 2) 
         {
             this.gameObject.SetActive(false);
             this.gameObject.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);

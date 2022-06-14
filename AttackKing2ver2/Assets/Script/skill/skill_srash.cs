@@ -12,12 +12,12 @@ public class skill_srash : MonoBehaviour
     public float slow_power;
 
     Vector3 shotForward;
-    private now_player_damage PlayerAllStatu;   //主人公の合計ステータス取得用
+    private player_all_statu PlayerAllStatu;   //主人公の合計ステータス取得用
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerAllStatu = GameObject.Find("now_player_damage").GetComponent<now_player_damage>();
+        PlayerAllStatu = GameObject.Find("player_all_statu").GetComponent<player_all_statu>();
 
         // クリックした座標の取得（スクリーン座標からワールド座標に変換）
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

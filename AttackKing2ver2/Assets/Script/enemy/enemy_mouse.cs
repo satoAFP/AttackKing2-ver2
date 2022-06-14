@@ -6,19 +6,20 @@ public class enemy_mouse : base_enemy
 {
     [SerializeField, Header("主人公感知のレイの速度")] private float RaySpeed;
     [SerializeField, Header("レイの距離")] private float raydistance;
+    [SerializeField, Header("ドロップ武器のprefab")] private GameObject DropWeapon;
 
 
     private Rigidbody2D rb;                     //リジットボディ取得
     private Vector2 RayRotato;                  //レイの回転位置決定変数
     private float rotato = 0;                   //回転量
     private GameObject SearchGameObject;        //レイに触れたオブジェクト
-    private now_player_damage PlayerAllStatu;   //主人公の合計ステータス取得用
+    private player_all_statu PlayerAllStatu;   //主人公の合計ステータス取得用
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        PlayerAllStatu = GameObject.Find("now_player_damage").GetComponent<now_player_damage>();
+        PlayerAllStatu = GameObject.Find("player_all_statu").GetComponent<player_all_statu>();
     }
 
     // Update is called once per frame
@@ -30,7 +31,14 @@ public class enemy_mouse : base_enemy
 
         //死亡処理
         if (hp <= 0)
+        {
+            //武器ドロップ処理
+            if ((float)drop_probability * (float)(PlayerAllStatu.AllLuc() / 10) > Random.Range(0, 100)) 
+            {
+                GameObject clone = Instantiate(DropWeapon, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
+        }
     }
 
 
@@ -71,14 +79,6 @@ public class enemy_mouse : base_enemy
                 else
                     transform.localScale = new Vector3(3, 3, 1);
 
-                // transformを取得
-                //Transform cloneTransform = this.gameObject.transform;
-
-                //// ワールド座標を基準に、回転を取得
-                //Vector3 worldAngle = cloneTransform.eulerAngles;
-                //worldAngle.z = GetAim(transform.position, SearchGameObject.transform.position) + 180; // ワールド座標を基準に、z軸を軸にした回転を10度に変更
-                //cloneTransform.eulerAngles = worldAngle; // 回転角度を設定
-
             }
         }
     }
@@ -89,20 +89,32 @@ public class enemy_mouse : base_enemy
     {
         if (other.tag == "player_skill")
         {
-            if (defense >= PlayerAllStatu.AllStrength())
-                hp -= 1;
-            else
-                hp -= PlayerAllStatu.AllStrength() - defense;
-
+            //主人公に対しての攻撃処理(スキル)
+            hp -= GetDamage(defense, PlayerAllStatu.AllStrength());
+            //スキル削除
             Destroy(other.gameObject);
         }
 
         if (other.tag == "player_weapon")
         {
-            if (defense >= PlayerAllStatu.AllStrength())
-                hp -= 1;
-            else
-                hp -= PlayerAllStatu.AllStrength() - defense;
+            //主人公に対しての攻撃処理(武器)
+            hp -= GetDamage(defense, PlayerAllStatu.AllStrength());
         }
     }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //主人公に対しての攻撃
+        if (collision.gameObject.tag == "Player")
+        {
+            player p = collision.gameObject.GetComponent<player>();
+
+            p.hp -= GiveDamage(PlayerAllStatu.AllDefence(), strength);
+
+        }
+    }
+
+
+
 }

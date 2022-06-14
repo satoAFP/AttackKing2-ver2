@@ -29,12 +29,6 @@ public class drop_weapon : base_weapon
         //追加ステータス決定
         AddStatusDecision();
 
-        //Debug.Log(Wd.name);
-        //Debug.Log(Wd.image);
-        //Debug.Log(Wd.skill);
-        //Debug.Log(Wd.strength);
-        //Debug.Log(Wd.magic);
-        //Debug.Log(Wd.weight);
     }
 
 
@@ -48,6 +42,9 @@ public class drop_weapon : base_weapon
         now_drop_weapons drop_manager = GameObject.Find("NowDropWeapons").GetComponent<now_drop_weapons>();
         int weapon_num = Random.Range(0, drop_manager.NowDropWeapon.Length);
         format_weapon drop_weapon = drop_manager.NowDropWeapon[weapon_num].GetComponent<format_weapon>();
+
+        //ドロップした武器の画像に変更
+        gameObject.GetComponent<SpriteRenderer>().sprite = drop_weapon.Image;
 
         //取得した武器のステータス格納
         Wd.name = drop_weapon.Name;
@@ -112,7 +109,7 @@ public class drop_weapon : base_weapon
             case (int)ADD_STATUS_TYPE.BARRIER:
                 return Random.Range(1, 10);
             case (int)ADD_STATUS_TYPE.SPEED:
-                return Random.Range(1, 5);
+                return Random.Range(1, 2);
             case (int)ADD_STATUS_TYPE.MOVE:
                 return Random.Range(1, 1);
             case (int)ADD_STATUS_TYPE.LUC:

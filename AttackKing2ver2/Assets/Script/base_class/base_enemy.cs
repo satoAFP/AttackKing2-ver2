@@ -15,7 +15,7 @@ public class base_enemy : MonoBehaviour
     public int barrier;
     public float attack_speed;
     public float move_speed;
-    public int luc;
+    public int drop_probability;
 
 
     /// <summary>
@@ -31,4 +31,35 @@ public class base_enemy : MonoBehaviour
         float rad = Mathf.Atan2(dy, dx);
         return rad * Mathf.Rad2Deg;
     }
+
+
+    /// <summary>
+    /// 主人公から与えられるダメージ計算関数
+    /// </summary>
+    /// <param name="def">エネミーの防御力</param>
+    /// <param name="getdamage">主人公の攻撃力</param>
+    /// <returns>最終的に受けるダメージ</returns>
+    public int GetDamage(int def,int getdamage)
+    {
+        if (def >= getdamage)
+            return 1;
+        else
+            return getdamage - def;
+    }
+
+
+    /// <summary>
+    /// 主人公に与えるダメージ計算関数
+    /// </summary>
+    /// <param name="getdef">主人公の防御力</param>
+    /// <param name="str">エネミーの攻撃力</param>
+    /// <returns>最終的に与えるメージ</returns>
+    public int GiveDamage(int getdef, int str)
+    {
+        if (getdef >= str)
+            return 1;
+        else
+            return str - getdef;
+    }
+
 }

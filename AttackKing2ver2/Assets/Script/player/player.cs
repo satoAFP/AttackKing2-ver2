@@ -15,11 +15,11 @@ public class player : base_player
         job = (int)JOB_TYPE.WARRIOR;
         exe = 0;
         //weapon = null;
-        hp = 50;
+        //hp = 50;
         mp = 20;
         mp_regene = 1;
         strength = 5;
-        defense = 5;
+        //defense = 5;
         magic = 5;
         barrier = 5;
         attack_speed = 1.0f;
@@ -33,14 +33,17 @@ public class player : base_player
     // Update is called once per frame
     void FixedUpdate()
     {
+        //ˆÚ“®ˆ—
         Move();
 
+        //UŒ‚ˆ—
         Attack();
 
-        
-
+        //•Šíæ“¾ˆ—
         GetWeapon();
+
     }
+
 
 
 
