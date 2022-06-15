@@ -110,7 +110,7 @@ public class enemy_mouse : base_enemy
         {
             player p = collision.gameObject.GetComponent<player>();
 
-            p.hp -= GiveDamage(PlayerAllStatu.AllDefence(), strength);
+            p.DecreaseHp -= GiveDamage(PlayerAllStatu.AllDefence(), strength);
 
         }
     }

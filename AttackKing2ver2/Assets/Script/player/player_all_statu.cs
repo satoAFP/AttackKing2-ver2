@@ -26,7 +26,7 @@ public class player_all_statu : base_weapon
     {
         int allhp = 0;
 
-        allhp = p.hp;
+        allhp = p.ps.hp;
 
         for (int i = 0; i < 5; i++)
         {
@@ -48,7 +48,7 @@ public class player_all_statu : base_weapon
     {
         int allmp = 0;
 
-        allmp = p.mp;
+        allmp = p.ps.mp;
 
         for (int i = 0; i < 5; i++)
         {
@@ -70,7 +70,7 @@ public class player_all_statu : base_weapon
     {
         int allstrength = 0;
 
-        allstrength = p.strength + nw.wd.strength;
+        allstrength = p.ps.strength + nw.wd.strength;
         
         for (int i = 0; i < 5; i++) 
         {
@@ -92,7 +92,7 @@ public class player_all_statu : base_weapon
     {
         int alldefence = 0;
 
-        alldefence = p.defense;
+        alldefence = p.ps.defense;
 
         for (int i = 0; i < 5; i++)
         {
@@ -114,7 +114,7 @@ public class player_all_statu : base_weapon
     {
         int allmagic = 0;
 
-        allmagic = p.magic + nw.wd.magic;
+        allmagic = p.ps.magic + nw.wd.magic;
 
         for (int i = 0; i < 5; i++)
         {
@@ -136,7 +136,7 @@ public class player_all_statu : base_weapon
     {
         int allbarrier = 0;
 
-        allbarrier = p.barrier;
+        allbarrier = p.ps.barrier;
 
         for (int i = 0; i < 5; i++)
         {
@@ -158,7 +158,7 @@ public class player_all_statu : base_weapon
     {
         float alldpeed = 0;
 
-        alldpeed = p.attack_speed;
+        alldpeed = p.ps.attack_speed;
 
         for (int i = 0; i < 5; i++)
         {
@@ -180,7 +180,7 @@ public class player_all_statu : base_weapon
     {
         float allmove = 0;
 
-        allmove = p.move_speed;
+        allmove = p.ps.move_speed;
 
         for (int i = 0; i < 5; i++)
         {
@@ -198,18 +198,18 @@ public class player_all_statu : base_weapon
     /// 主人公最終運取得関数
     /// </summary>
     /// <returns>最終運</returns>
-    public float AllLuc()
+    public int AllLuc()
     {
-        float allluc = 0;
+        int allluc = 0;
 
-        allluc = p.luc;
+        allluc = p.ps.luc;
 
         for (int i = 0; i < 5; i++)
         {
             //追加ステータスが防御アップの時
             if (nw.As.statunumber[i] == (int)ADD_STATUS_TYPE.LUC)
             {
-                allluc += nw.As.addvalue[i];
+                allluc += (int)nw.As.addvalue[i];
             }
         }
         return allluc;
@@ -220,16 +220,16 @@ public class player_all_statu : base_weapon
     /// 主人公最終HP自動回復量取得関数
     /// </summary>
     /// <returns>最終HP自動回復量</returns>
-    public float AllHpRegene()
+    public int AllHpRegene()
     {
-        float allhpregene = 0;
+        int allhpregene = 0;
 
         for (int i = 0; i < 5; i++)
         {
             //追加ステータスが防御アップの時
             if (nw.As.statunumber[i] == (int)ADD_STATUS_TYPE.HP_REGENE)
             {
-                allhpregene += nw.As.addvalue[i];
+                allhpregene += (int)nw.As.addvalue[i];
             }
         }
         return allhpregene;
@@ -240,18 +240,18 @@ public class player_all_statu : base_weapon
     /// 主人公最終MP自動回復量取得関数
     /// </summary>
     /// <returns>最終MP自動回復量</returns>
-    public float AllMpRegene()
+    public int AllMpRegene()
     {
-        float allmpregene = 0;
+        int allmpregene = 0;
 
-        allmpregene = p.mp_regene;
+        allmpregene = p.ps.mp_regene;
 
         for (int i = 0; i < 5; i++)
         {
             //追加ステータスが防御アップの時
             if (nw.As.statunumber[i] == (int)ADD_STATUS_TYPE.MP_REGENE)
             {
-                allmpregene += nw.As.addvalue[i];
+                allmpregene += (int)nw.As.addvalue[i];
             }
         }
         return allmpregene;

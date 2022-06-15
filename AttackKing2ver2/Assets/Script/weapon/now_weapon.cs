@@ -66,11 +66,18 @@ public class now_weapon : base_weapon
             cloneTransform.eulerAngles = worldAngle; // 回転角度を設定
 
 
+            //MPが無いとスキルが出せない
+            if (player.DecreaseMp >= wd.mp_cost)
+            {
+                //使用するスキル決定
+                sp.skill = wd.skill;
+                //スキルの攻撃開始許可
+                sp.AttackStart = true;
+                //MP使用
+                player.DecreaseMp -= wd.mp_cost;
+            }
 
-            //使用するスキル決定
-            sp.skill = wd.skill;
-            //スキルの攻撃開始許可
-            sp.AttackStart = true;
+
             //攻撃処理終了
             atack_flag = false;
         }
