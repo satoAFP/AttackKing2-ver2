@@ -173,15 +173,21 @@ public class player : base_player
 
     
 
+    /// <summary>
+    /// リジェネ処理
+    /// </summary>
     private void Regene()
     {
+        //リジェネの回復速度
         if (RegeneCount == 60) 
         {
+            //HP回復
             if (DecreaseHp < allps.hp)
                 DecreaseHp += allps.hp_regene;
             else
                 DecreaseHp = allps.hp;
 
+            //MP回復
             if (DecreaseMp < allps.mp)
                 DecreaseMp += allps.mp_regene;
             else
